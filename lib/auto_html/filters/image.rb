@@ -6,10 +6,13 @@ class NoParagraphRenderer < ::Redcarpet::Render::XHTML
   end    
 end
 
-AutoHtml.add_filter(:image).with({:alt => ''}) do |text, options|
+AutoHtml.add_filter(:image).with({:alt => '', :class => ''}) do |text, options|
   r = Redcarpet::Markdown.new(NoParagraphRenderer)
   alt = options[:alt]
-  text.gsub(/https?:\/\/.+?\.(jpg|jpeg|bmp|gif|png)(\?\S+)?/i) do |match|
-    r.render("![#{alt}](#{match})")
+  klass = options[:class]
+  img = text.gsub(/https?:\/\/.+?\.(jpg|jpeg|bmp|gif|png)(\?\S+)?/i) do |match|
+    r.render("[![#{alt}](#{match})](#{match}))")
+    #r.render("![#{alt}](#{match})")
   end
+  "<div class='#{klass}'>" + img + "</div>"
 end
