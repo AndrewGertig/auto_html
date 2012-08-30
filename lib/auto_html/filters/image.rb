@@ -6,7 +6,7 @@ class NoParagraphRenderer < ::Redcarpet::Render::XHTML
   end    
 end
 
-AutoHtml.add_filter(:image).with({:alt => '', :class => ''}) do |text, options|
+AutoHtml.add_filter(:image).with(:alt => 'default-alt', :class => '') do |text, options|
   r = Redcarpet::Markdown.new(NoParagraphRenderer)
   alt = options[:alt]
   klass = options[:class]
